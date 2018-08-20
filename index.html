@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Steve Jobs Anecdotes</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto">
+<style>
+	.wrapper{
+		width: 60%;
+		margin:auto;		
+		font-family: Roboto;
+		font-size: 15px;
+	}
+	.content{
+		padding: 10px;
+	}
+	.jobs{
+		font-weight: bolder;
+	}
+	.footer{
+		float: right;
+	}
+	button{
+		position: fixed;
+		bottom: 5%;
+	}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header"></div>
+		<div class="content"></div>
+		<div class="footer"></div>
+		<div class="read-next">
+			<button type="button" class="btn btn-primary">Read Another</button>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$.get('./sjobs_anecdotes.json', function(data){
+
+				var anecdotes = data['anecdotes'];
+
+				$('button').click(function(){
+					randomAnecdote();
+				});
+
+				var randomAnecdote = function(){
+
+					var randomIndex = Math.floor(Math.random() * anecdotes.length);
+					var anecdote = anecdotes[randomIndex];
+					var paragraph = anecdote['paragraph'];
+					
+					var content = "";
+					for(var i = 0;i < paragraph.length;i++){
+						content += "<p>"+paragraph[i].replace("Jobs", "<span class='jobs'>Jobs</span>")+"</p>";
+					}
+					$('.content').html(content);
+
+					var sourceText = anecdote['source']['text'];
+					var sourceLink = anecdote['source']['link'];
+					if(!sourceText) sourceText = "Unknown";
+					if(!sourceLink) sourceLink = "javascript:void(0);";
+					
+					var footer = '<a class="source" href="'+sourceLink+'">'+sourceText+'</a>';
+					$('.footer').html(footer);
+				};
+				
+				randomAnecdote();
+
+			});
+		});
+	</script>
+</body>
+</html>
