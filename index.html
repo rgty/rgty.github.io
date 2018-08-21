@@ -14,6 +14,7 @@
 		font-family: Roboto;
 		font-size: 16px;
 		display: none;
+		height: 1000px;
 	}
 	.content{
 		padding: 10px;
@@ -92,19 +93,15 @@
 
 			});
 
-			/*var isScrollDown = false;
-			$(window).on("scroll", function() {
-				var scrollHeight = $(document).height();
-				var scrollPosition = $(window).height() + $(window).scrollTop();
-				var scrollCondition = (scrollHeight - scrollPosition) / scrollHeight;
-				if(!isScrollDown){
-					isScrollDown = (scrollCondition === 0);
-				}else if(scrollCondition > 0){
-					isScrollDown = false;
+			var scrollTop = 0;
+			$(window).scroll(function(){
+				if($(this).scrollTop() > scrollTop){
+					$(".read-next").fadeOut(350);
+				}else{
 					$(".read-next").fadeIn(350);
 				}
-			});*/
-
+				scrollTop = $(this).scrollTop();
+			});
 		});
 	</script>
 </body>
