@@ -3,27 +3,36 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Steve Jobs Anecdotes</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 <style>
 	.wrapper{
-		width: 60%;
+		width: 70%;
 		margin:auto;		
 		font-family: Roboto;
-		font-size: 15px;
+		font-size: 16px;
 	}
 	.content{
 		padding: 10px;
 	}
-	.jobs{
+	.steve{
 		font-weight: bolder;
 	}
 	.footer{
 		float: right;
+		font-family: Open Sans;
+		font-size: 14px;
+		font-weight: bold;
 	}
-	button{
+	.read-next{
 		position: fixed;
 		bottom: 5%;
+		right:10%;
+	}
+	.btn-primary{
+		font-size: 15px;
 	}
 </style>
 </head>
@@ -32,14 +41,15 @@
 		<div class="header"></div>
 		<div class="content"></div>
 		<div class="footer"></div>
-		<div class="read-next">
-			<button type="button" class="btn btn-primary">Read Another</button>
-		</div>
+	</div>
+	<div class="read-next">
+		<button type="button" class="btn btn-primary">Read Another</button>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function(){
+
 			$.get('./sjobs_anecdotes.json', function(data){
 
 				var anecdotes = data['anecdotes'];
@@ -47,6 +57,10 @@
 				$('button').click(function(){
 					randomAnecdote();
 				});
+
+				var spotlight = function(paragraph){
+					return paragraph.replace(/(steve jobs)/gi, "<span class='steve'>Steve Jobs</span>").replace(/jobs/gi, "<span class='steve'>Jobs</span>");
+				};
 
 				var randomAnecdote = function(){
 
@@ -56,7 +70,7 @@
 					
 					var content = "";
 					for(var i = 0;i < paragraph.length;i++){
-						content += "<p>"+paragraph[i].replace("Jobs", "<span class='jobs'>Jobs</span>")+"</p>";
+						content += "<p>"+spotlight(paragraph[i])+"</p>";
 					}
 					$('.content').html(content);
 
@@ -68,7 +82,7 @@
 					var footer = '<a class="source" href="'+sourceLink+'">'+sourceText+'</a>';
 					$('.footer').html(footer);
 				};
-				
+
 				randomAnecdote();
 
 			});
