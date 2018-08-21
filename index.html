@@ -9,10 +9,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 <style>
 	.wrapper{
-		width: 70%;
+		width: 97%;
 		margin:auto;		
 		font-family: Roboto;
 		font-size: 16px;
+		display: none;
 	}
 	.content{
 		padding: 10px;
@@ -20,16 +21,16 @@
 	.steve{
 		font-weight: bolder;
 	}
-	.footer{
-		float: right;
+	.footer{	
 		font-family: Open Sans;
 		font-size: 14px;
 		font-weight: bold;
+		padding: 10px;
 	}
 	.read-next{
 		position: fixed;
 		bottom: 5%;
-		right:10%;
+		right:5%;
 	}
 	.btn-primary{
 		font-size: 15px;
@@ -37,7 +38,7 @@
 </style>
 </head>
 <body>
-	<div class="wrapper">
+	<div class="wrapper" id="wrapper">
 		<div class="header"></div>
 		<div class="content"></div>
 		<div class="footer"></div>
@@ -64,6 +65,8 @@
 
 				var randomAnecdote = function(){
 
+					$('#wrapper').hide();
+
 					var randomIndex = Math.floor(Math.random() * anecdotes.length);
 					var anecdote = anecdotes[randomIndex];
 					var paragraph = anecdote['paragraph'];
@@ -76,16 +79,32 @@
 
 					var sourceText = anecdote['source']['text'];
 					var sourceLink = anecdote['source']['link'];
-					if(!sourceText) sourceText = "Unknown";
+					if(!sourceText) sourceText = "Anonymous";
 					if(!sourceLink) sourceLink = "javascript:void(0);";
 					
 					var footer = '<a class="source" href="'+sourceLink+'">'+sourceText+'</a>';
 					$('.footer').html(footer);
+
+					$('#wrapper').fadeIn(350);
 				};
 
 				randomAnecdote();
 
 			});
+
+			/*var isScrollDown = false;
+			$(window).on("scroll", function() {
+				var scrollHeight = $(document).height();
+				var scrollPosition = $(window).height() + $(window).scrollTop();
+				var scrollCondition = (scrollHeight - scrollPosition) / scrollHeight;
+				if(!isScrollDown){
+					isScrollDown = (scrollCondition === 0);
+				}else if(scrollCondition > 0){
+					isScrollDown = false;
+					$(".read-next").fadeIn(350);
+				}
+			});*/
+
 		});
 	</script>
 </body>
