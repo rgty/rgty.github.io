@@ -26,6 +26,8 @@
 		font-size: 14px;
 		font-weight: bold;
 		padding: 10px;
+		display: flex;
+		justify-content: space-between;
 	}
 	.read-next{
 		position: fixed;
@@ -41,7 +43,10 @@
 	<div class="wrapper" id="wrapper">
 		<div class="header"></div>
 		<div class="content"></div>
-		<div class="footer"></div>
+		<div class="footer">
+			<div class="owner"></div>
+			<div class="copyright"></div>
+		</div>
 	</div>
 	<div class="read-next">
 		<button type="button" class="btn btn-primary">Read Another</button>
@@ -52,6 +57,9 @@
 		$(document).ready(function(){
 
 			$.get('./sjobs_anecdotes.json', function(data){
+
+				var year = new Date().getFullYear();
+				$('.copyright').html("<a href='https://allaboutstevejobs.com/' target='_blank'>allaboutstevejobs.com</a>&nbsp;&copy;&nbsp;"+year)
 
 				var anecdotes = data['anecdotes'];
 
@@ -83,7 +91,7 @@
 					if(!sourceLink) sourceLink = "javascript:void(0);";
 					
 					var footer = '<a class="source" href="'+sourceLink+'">'+sourceText+'</a>';
-					$('.footer').html(footer);
+					$('.owner').html(footer);
 
 					$('#wrapper').fadeIn(350);
 				};
